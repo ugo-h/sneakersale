@@ -21,7 +21,6 @@ class productList(View):
 
     def post(self, request):
         
-        a = 45 + 7
         refreshDatabase()
         products_list = Product.objects.all()
         return render(request, 'products/products.html', {'products_list': products_list,})
