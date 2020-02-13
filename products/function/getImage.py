@@ -1,35 +1,41 @@
 
-from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen
+import requests
+from bs4 import BeautifulSoup
 import time
-
+image_classes = {
+    'allikestore':('','gallery-image'),
+    'superstep':('https://superstep.ru/','product-slider__img js-product-current-img'),
+}
 
 def getImage(url):
-    content = openUrl(url)
-    img = content.find_all('img', {'class':'gallery-item__img'}, limit=1)[0]
-    return findLink('{}'.format(img))
+    html = get_html(url)
+    soup = BeautifulSoup(html, 'lxml')
+    shopName = (url.split('.')[1])
+    print()
+    print(url)
+    print()
+    print(shopName)
+    print()
+    image =  parse_image(soup, shopName)
+    print(image)
+    print(image_classes[shopName][1])
+    image = image_classes[shopName][0] + image
+    print()
+    print(image)
+    print()
+    return  image
 
+def get_html(url):
+    r = requests.get(url)
+    return r.text
 
-def openUrl(url):
-    '''Function returns html page from url
-    ready for parsing '''
-    uClient = urlopen(url)
-    htmlPage = uClient.read()
-    uClient.close()
-    return soup(htmlPage, 'html.parser')
+def parse_image(soup, shopName):
+    if shopName == 'superstep':
+        print( soup.find('div', class_="product-container").find_all('img') )
+    else:
+        return soup.find('img', class_=image_classes[shopName][1]).get('src')
 
-
-def findLink(text):
-    '''Function finds a link in a string from html tag by dividing it into separate parts
-    with ' " ' symbol and then searching in each division for 'http'  '''
-    text = text.split('\"')
-    for word in text:
-        if word[0:4] =='http':
-            return word
 
 
 if __name__ == '__main__':
-    timeStart = time.perf_counter()
-    print(getImage('https://ru.puma.com/sportivnye-tovary-dlja-muzhchin/obuv/krossovki/rs-9-8-ader-error-370110-01.html'))
-    timeStop = time.perf_counter()
-    print(timeStop - timeStart)
+    getImage()

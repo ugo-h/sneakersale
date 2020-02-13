@@ -18,11 +18,9 @@
           
           <img src="{{ product.img }}" class="card-img-top" alt="image">
           <div class="card-body">
-            <h5 class="card-title">{{ product.title|title }}</h5>
+            <h5 class="card-title">{{ product.title|title|truncatechars:40 }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <p class="card-text"><s style="color:rgb(177, 55, 55)">{{ product.oldPrice }} RUB</s></p>
-            <p class="card-text">{{ product.price }} RUB</p>
-            
+            <p class="card-text"><s style="color:rgb(177, 55, 55)">{{ product.oldPrice }} RUB</s>  {{ product.price }} RUB</p>
             <p class="card-text mt-auto"><small class="text-muted">Updated: {{ product.last_update }}</small></p>
           </div>
         

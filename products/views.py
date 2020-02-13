@@ -28,7 +28,11 @@ class productList(View):
 
 def product_detail(request, slug):
     details = Product.objects.get(slug__iexact=slug)
-    if details.detailedImage ==  'none':
-        details.detailedImage = getImage(details.link)
+    if details.detailedImage ==  '':
+        # geetImageFrom = link.split('.')[1] + 'GetImage'
+        try:    
+            details.detailedImage = getImage(details.link)
+        except:
+            details.detailedImage = details.img
         details.save()
     return render(request, 'products/product_detail.html', {'details': details})

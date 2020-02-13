@@ -14,7 +14,7 @@ def get_html(url):
     return r.text         # Возвращает HTML-код страницы (url)
 
 def get_all_data(html):
-    url = 'https://superstep.ru'
+    url = 'https://www.superstep.ru'
     soup = BeautifulSoup(html, 'lxml')
     divs = soup.find('div', class_="list-content").find_all('div', itemtype="https://schema.org/Product")
     data = {}
@@ -106,6 +106,7 @@ def main():
     timerEnd = time()
     total = timerEnd - timerStart
     print(total)
+    print(len(data_list))
     return data_list
 
 

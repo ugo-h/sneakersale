@@ -7,7 +7,7 @@ from multiprocessing import Pool
 import sys
 from os import path
 
-data_list = []
+
 BRANDS = [
         'adidas',
         'Aimé Leon Dore',
@@ -33,32 +33,27 @@ def get_html(url):
     r = requests.get(url) #Response
     return r.text         # Возвращает HTML-код страницы (url)
 
-def get_all_links(html):
+def get_all_products(html):
     soup = BeautifulSoup(html, 'lxml')
-    divs = soup.find('ul', class_='products-grid').find_all('a', class_='product-image')
-    links = []
-    for div in divs:
-        a = div.get('href')
-        link = a
-        links.append(link)
-    return links
+    products = soup.find_all('li', class_='item')
+    return products
 
-def get_page_data(html):
-    soup = BeautifulSoup(html, 'lxml')
+def get_data(product, data_list):
     try:
-        name = soup.find('h1').text.strip()
-        if name == 'Please turn JavaScript on and reload the page.':
-            name = soup.find('h1').text.strip()
+        a = product.find('h2', class_="product-name").find('a')
+        link = a.get('href')
+        name = a.text.strip()
         brand = name.split(' ')[0]
         for br in BRANDS:
             if brand in br:
                 brand = br
     except: 
+        link = ''
         name = ''
         brand = ''
         print('name not_found')
     try:
-        price = soup.find_all('span', class_='price')
+        price = product.find_all('p')
         old_price = float(price[1].text.strip()[1:])
         special_price = float(price[0].text.strip()[1:])
     except:
@@ -66,7 +61,7 @@ def get_page_data(html):
         special_price = 0
         print('price not_found')
     try:
-        img = soup.find('img', id="image-0").get('src')
+        img = product.find('img', class_="regular_img").get('src')
     except:
         img = '#'
 
@@ -74,9 +69,11 @@ def get_page_data(html):
         'name': name,
         'old price': old_price,
         'special price': special_price,
-        'img': img
+        'img': img,
+        'brand': brand,
+        'link': link,
         }
-    return data
+    data_list.append(transfer(data))
 
 def transfer(data):
     cell = (
@@ -84,39 +81,26 @@ def transfer(data):
         data['old price'],
         data['special price'],
         data['link'],
-        data['img']
+        data['img'],
+        data['brand'],
         )
+    
     print(cell[0], cell[1], '/',cell[2])
     return cell
 
-def make_all(url):
-    html = get_html(url)
-    data = get_page_data(html)
-    data['link'] = url
-    try:
-        data_list.append(transfer(data))
-    except(UnicodeEncodeError):
-        data['name'] = 'empty'
-        print(url)
-        data_list.append(transfer(data))
-
 def main():
-    global data_list
     timerStart = time()
+    data_list = []
     url = 'https://www.allikestore.com/default/sale/footwear-men.html?limit=all'
-    all_links = get_all_links(get_html(url))
-    # for index, url in enumerate(all_links):
-    #     html = get_html(url)
-    #     data = get_page_data(html)
-    #     print(index)
-    #     write_csv(data)
-    
-    with Pool(10) as p:
-        p.map(make_all, all_links)
+    products = get_all_products(get_html(url))
+    for product in products:
+        get_data(product, data_list)
     timerEnd = time()
     total = timerEnd - timerStart
     print(total)
+    print(len(data_list))
     return data_list
+
 
 
 if __name__ == '__main__':

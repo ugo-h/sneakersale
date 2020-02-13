@@ -18,7 +18,7 @@ def refreshDatabase():
     n=0
     alikestoreProducts = alikestoreParser()
     superstepProducts = []
-    # superstepProducts = superstepParser()
+    superstepProducts = superstepParser()
     parsed_products = alikestoreProducts + superstepProducts
     for line in parsed_products:
             if line:
