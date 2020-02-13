@@ -13,8 +13,8 @@
   <div class="card-group">
      {% for product in products_list %}
      <div class="col mb-2"  >
-      <a href="{{ product.get_absolute_url }}" class="btn mb-3 btn-light"  style="min-width: 220px; max-width: 300px; height: 440px; text-align: left; ">
-        <div class="card" >
+      <a href="{{ product.get_absolute_url }}" class="btn mb-3 btn-white product"  style="min-width: 220px; max-width: 360px; height: 480px; text-align: left; ">
+        <div class="card-deck" >
           
           <img src="{{ product.img }}" class="card-img-top" alt="image">
           <div class="card-body">
