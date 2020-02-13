@@ -11,14 +11,16 @@ IMG = 4
 GENERAL_CSV = path.join('products', 'parser', 'general.csv')
 
 def refreshDatabase():
-    try:
-        f = open(GENERAL_CSV, 'r')
-        if f == []:
-            f.close()
-            raise(FileNotFoundError)
-        f.close()
-    except(FileNotFoundError):
-        parser()
+    f = open(GENERAL_CSV, 'w')
+    f.close()
+    # try:
+    #     f = open(GENERAL_CSV, 'r')
+    #     if f == []:
+    #         f.close()
+    #         raise(FileNotFoundError)
+    #     f.close()
+    # except(FileNotFoundError):
+    parser()
 
     products_list = Product.objects.all()
     products_list.delete()
@@ -34,8 +36,9 @@ def refreshDatabase():
                     oldPrice=line[OLD_PRICE], 
                     price=line[SPECIAL_PRICE], 
                     img=line[IMG],
-                    )    
+                    )   
 
-
+    f = open(GENERAL_CSV, 'w')
+    f.close()
 if __name__ == '__main__':
     refreshDatabase()

@@ -41,10 +41,8 @@ def get_page_data(html):
         print('not_found')
     try:
         price = soup.find_all('span', class_='price')
-        old_price = price[1].text.strip()
-        old_price = transformPriceToNumber(old_price)
-        special_price = price[0].text.strip()
-        special_price = transformPriceToNumber(special_price)
+        old_price = float(price[1].text.strip()[1:])
+        special_price = float(price[0].text.strip()[1:])
     except:
         old_price = 0
         special_price = 0
