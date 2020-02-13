@@ -11,6 +11,7 @@ class Product(models.Model):
     link = models.TextField(blank=True, db_index=True)
     img = models.TextField(blank=True, db_index=True)
     detailedImage = models.TextField(default='', db_index=True)
+    brand = models.CharField(default='', max_length=150, db_index=True )
     last_update = models.DateTimeField(auto_now_add=True)
 
    

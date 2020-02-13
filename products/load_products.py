@@ -1,5 +1,6 @@
 from .models import Product
-from .parser.main import main as parser
+from .parser.alikestoreParser import main as alikestoreParser
+from .parser.superstepParser import main as superstepParser
 import csv
 from os import path
 
@@ -8,24 +9,18 @@ OLD_PRICE = 1
 SPECIAL_PRICE = 2
 LINK = 3
 IMG = 4
-GENERAL_CSV = path.join('products', 'parser', 'general.csv')
+BRAND = 5
+
 
 def refreshDatabase():
-    try:
-        f = open(GENERAL_CSV, 'r')
-        if f == []:
-            f.close()
-            raise(FileNotFoundError)
-        f.close()
-    except(FileNotFoundError):
-        parser()
-
     products_list = Product.objects.all()
     products_list.delete()
     n=0
-    with open (GENERAL_CSV, 'r') as f:
-        reader = csv.reader(f)
-        for line in reader:
+    alikestoreProducts = alikestoreParser()
+    superstepProducts = []
+    # superstepProducts = superstepParser()
+    parsed_products = alikestoreProducts + superstepProducts
+    for line in parsed_products:
             if line:
                 n+=1
                 Product.objects.create(
@@ -34,6 +29,7 @@ def refreshDatabase():
                     oldPrice=line[OLD_PRICE], 
                     price=line[SPECIAL_PRICE], 
                     img=line[IMG],
+                    brand=line[BRAND],
                     )    
 
 
