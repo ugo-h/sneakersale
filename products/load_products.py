@@ -22,6 +22,8 @@ def refreshDatabase():
     parsed_products = alikestoreProducts + superstepProducts
     for line in parsed_products:
             if line:
+                if not line[Name] or not line[SPECIAL_PRICE]:
+                    continue
                 n+=1
                 Product.objects.create(
                     title=line[NAME], 

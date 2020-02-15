@@ -32,6 +32,7 @@ a{
 }
 
 h5{
+
     height:30px;
     white-space: normal ;
     overflow: hidden;
@@ -51,6 +52,7 @@ h5:hover{
 }
 
 #section-image img{
+    margin-right: 10px;
         background-color: red;
         position:relative;
         width: 50%;
@@ -61,7 +63,7 @@ h5:hover{
 #content {
         float:right;
         position:relative;
-        width: 50%;
+        width: 40%;
         box-sizing: border-box;
         font-size: 25px;
         }

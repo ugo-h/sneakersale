@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 image_classes = {
-    'allikestore':('','gallery-image'),
+    'allikestore':('','gallery-image visible'),
     'superstep':('https://superstep.ru/','product-slider__img js-product-current-img'),
 }
 

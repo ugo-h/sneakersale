@@ -11,7 +11,7 @@
 </form>
   <h1 class="mb-5">Men's   footwear:</h1>
   <div class="card-group">
-     {% for product in products_list %}
+     {% for product in page_object %}
      <div class="col mb-2"  >
       <a href="{{ product.get_absolute_url }}" class="product" >
         <div class="card-deck" >
@@ -20,7 +20,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ product.title|title }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <p class="card-text"><s style="color:rgb(177, 55, 55)">{{ product.oldPrice }} RUB</s>  {{ product.price }} RUB</p>
+            <p class="card-text"><s >{{ product.oldPrice }} RUB</s> <b style="color:rgb(177, 55, 55)"> {{ product.price }} RUB </b></p>
             <p class="card-text mt-auto"><small class="text-muted">Updated: {{ product.last_update }}</small></p>
           </div>
         
