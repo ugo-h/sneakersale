@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'products_url' %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class='btn btn-light' id="refresh-btn">Refesh</button>
-</form>
+<nav class="navbar navbar-expand navbar-light bg-white mt-0">
+    <div class="navbar-nav" >
+      <a class="nav-item nav-link active" href="?order=price">По цене  <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link"  href="?order=title">По названию </a>
+  </div>
+</nav>
+
   <h1 class="mb-5">Men's   footwear:</h1>
   <div class="card-group">
      {% for product in page_object %}
@@ -29,6 +32,10 @@
         
     {% endfor %}
 </div>
+<form action="{% url 'products_url' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class='btn btn-light' id="refresh-btn">Refesh</button>
+</form>
 {% endblock %}<!-- 
 
 btn mb-3 btn-white  -->

@@ -11,6 +11,7 @@ LINK = 3
 IMG = 4
 BRAND = 5
 
+brandList = set()
 
 def refreshDatabase():
     products_list = Product.objects.all()

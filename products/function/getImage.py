@@ -31,6 +31,7 @@ def get_html(url):
 
 def parse_image(soup, shopName):
     if shopName == 'superstep':
+        time.sleep(3)
         print( soup.find('div', class_="product-container").find_all('img') )
     else:
         return soup.find('img', class_=image_classes[shopName][1]).get('src')

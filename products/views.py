@@ -8,7 +8,7 @@ from products.function.getImage import *
 from products.function.sneakerScraper import *
 from .load_products import refreshDatabase
 from time import time
-
+        
 
 
 # Create your views here.
@@ -16,11 +16,31 @@ from time import time
 class productList(View):
 
     def get(self, request):
-        products_list = Product.objects.all()
+        
+        order = request.GET.get('order')
+        if order == None:
+            order = 'title'
+        brand_name = request.GET.get('brand')
+        if brand_name == None:
+            brand = '?'
+        else:
+            brand = f'?brand={brand_name}&'
+        print(brand_name)
+
+
+        products_list = Product.objects.order_by(order)
+        brandList = set()
+        for p in products_list:
+            brandList.add(p.brand)
+        print(list(brandList))
+
+
         paginator = Paginator(products_list, 20)
         page_number = request.GET.get('page')
+
         page_obj = paginator.get_page(page_number)
         is_paginated = page_obj.has_other_pages()
+
         if page_obj.has_previous():
             previous_url = f'?page={page_obj.previous_page_number()}'
         else:
@@ -29,12 +49,15 @@ class productList(View):
             next_url = f'?page={page_obj.next_page_number()}'
         else:
             next_url = ''
+
         context = {
         'page_object':  page_obj,
         'is_paginated': is_paginated,
         'previous': previous_url,
         'next': next_url,
-        # 'page': page_obj,
+        'brand': brand,
+        'order': order,
+        'brandList': brandList,
         }
         return render(request, 'products/products.html', context)
 
