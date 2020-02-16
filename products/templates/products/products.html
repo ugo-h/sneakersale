@@ -5,12 +5,32 @@
 {% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-expand navbar-light bg-white mt-0">
-    <div class="navbar-nav" >
-      <a class="nav-item nav-link active" href="?order=price">По цене  <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link"  href="?order=title">По названию </a>
-  </div>
-</nav>
+ <div class="wrapper">
+  <nav id="sidebar active" class="mr-4">
+     <button type="button" id="sidebarCollapse" data-toggle="collapse" data-target=".list-unstyled" class="btn btn-light">
+                <i class="fas fa-align-left"></i>
+                <span>Brands</span>
+            </button>
+    <ul class="collapse list-unstyled components mt-3">
+      {% for brandName in brandList %}
+      <li>
+        <a href="{{ brandName.get_absolute_url }}">{{brandName|title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+         
+<div id="content mb-3">
+  <nav class="navbar navbar-expand navbar-light bg-white mt-0">
+      <div class="navbar-nav" >
+
+
+           
+
+        <a class="nav-item nav-link active" href="?order=price">По цене  <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link"  href="?order=title">По названию </a>
+    </div>
+  </nav>
 
   <h1 class="mb-5">Men's   footwear:</h1>
   <div class="card-group">
@@ -29,13 +49,15 @@
         
         </div> </a>
 </div>
-        
+       
     {% endfor %}
 </div>
 <form action="{% url 'products_url' %}" method="post">
   {% csrf_token %}
   <button type="submit" class='btn btn-light' id="refresh-btn">Refesh</button>
 </form>
-{% endblock %}<!-- 
+{% endblock %}
+</div>
+<!-- 
 
 btn mb-3 btn-white  -->

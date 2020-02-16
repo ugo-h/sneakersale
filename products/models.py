@@ -19,17 +19,21 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product_details_url', kwargs={'slug': self.slug})
 
-    def get_all(self):
-        tag_list = set()
-        objs = list(self.objects.all())
-        for obj in objs:
-            tag_list.add(obj.brand.lower())
-        return tag_list
-
     def __str__(self):
         return '{}'.format(self.title)
 
     class Meta:
         ordering =['price'.lower()]
     
+
+class Brand(models.Model):
+    title = models.CharField(max_length=150, db_index=True)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def get_absolute_url(self):
+        return reverse('product_brand_url', kwargs={'slug': self.slug})
+
+
+    def __str__(self):
+        return self.title
 

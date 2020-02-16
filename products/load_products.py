@@ -1,6 +1,7 @@
-from .models import Product
+from .models import Product, Brand
 from .parser.alikestoreParser import main as alikestoreParser
 from .parser.superstepParser import main as superstepParser
+from .function.slugify import slugify
 import csv
 from os import path
 
@@ -14,6 +15,7 @@ BRAND = 5
 brandList = set()
 
 def refreshDatabase():
+    brandList = []
     products_list = Product.objects.all()
     products_list.delete()
     n=0
@@ -23,9 +25,20 @@ def refreshDatabase():
     parsed_products = alikestoreProducts + superstepProducts
     for line in parsed_products:
             if line:
-                if not line[Name] or not line[SPECIAL_PRICE]:
+                if not line[NAME] or not line[SPECIAL_PRICE]:
                     continue
                 n+=1
+                
+                if not line[BRAND].lower() in brandList:
+                    try:
+                        Brand.objects.create(title=line[BRAND], slug=slugify(line[BRAND]))
+                    except:
+                        print(brandList)
+                        print()
+                        print(line[BRAND])
+                        print()
+                        print()
+                    brandList.append(line[BRAND].lower())
                 Product.objects.create(
                     title=line[NAME], 
                     slug=n, link=line[LINK],
