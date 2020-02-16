@@ -54,8 +54,8 @@ def get_data(product, data_list):
         print('name not_found')
     try:
         price = product.find_all('p')
-        old_price = float(price[1].text.strip()[1:])
-        special_price = float(price[0].text.strip()[1:])
+        old_price = round(float(price[1].text.strip()[1:]))*69
+        special_price = round(float(price[0].text.strip()[1:]))*69
     except:
         old_price = 0
         special_price = 0

@@ -30,9 +30,9 @@ def get_all_data(html):
         brand = meta[1].get('content')
         name = brand + ' ' + meta[0].get('content')
         old_price = price.find('span', class_='product-list-price').text.strip()
-        old_price = (transformPriceToNumber(old_price))
+        old_price = int(transformPriceToNumber(old_price)) 
         new_price = price.find('span', class_='product-sale-price').text.strip()
-        new_price = (transformPriceToNumber(new_price)) 
+        new_price = int(transformPriceToNumber(new_price)) 
         data = {
             'name': name,
             'old price': old_price,

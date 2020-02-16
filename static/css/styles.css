@@ -7,14 +7,35 @@
     text-align: left; 
     margin:2px;
     }*/
+
+.wrapper{
+    align-items: stretch;
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    color: red;
+
+}
+
+#sidebar.active {
+
+    margin-left: -250px;
+    position: fixed;
+    border-right:  gray solid 2px;
+
+}
 a{
     text-decoration: none;
 }
 .product{
     /*min-width: 300px;*/
 
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 220px;
+    max-width: 300px;
     height: auto; 
     text-align: left; 
     margin:2px;
