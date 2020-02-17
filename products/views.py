@@ -16,7 +16,7 @@ from .utils import objectListMixin
 
 class productList(objectListMixin):
     product_model = Product.objects
-
+    Brand.list_of_slugs = []
     def post(self, request):
         
         refreshDatabase()

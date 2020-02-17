@@ -16,7 +16,7 @@ class objectListMixin(View):
         
         order = request.GET.get('order')
         if order == None:
-            order = '-title'
+            order = 'title'
 
         
         if order[0] == '-':

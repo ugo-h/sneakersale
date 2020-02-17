@@ -26,14 +26,26 @@ class Product(models.Model):
         ordering =['price'.lower()]
     
 
+
 class Brand(models.Model):
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
-
+    list_of_slugs = []
     def get_absolute_url(self):
-        return reverse('product_brand_url', kwargs={'slug': self.slug})
+        if not self.slug in self.list_of_slugs:
+            self.list_of_slugs.append('+')
+            self.list_of_slugs.append(self.slug)
+        else:
+            self.list_of_slugs.remove(self.slug)
+        print(self.list_of_slugs)
+        return reverse('product_brand_url', kwargs={'slug': ''.join(self.list_of_slugs)})
 
+    def clearBrands(self):
+        self.list_of_slugs = []
 
     def __str__(self):
         return self.title
+
+    # class All(object):
+    #     list_of_slugs = []
 
