@@ -32,13 +32,14 @@ class Brand(models.Model):
     slug = models.SlugField(max_length=150, unique=True)
     list_of_slugs = []
     def get_absolute_url(self):
-        if not self.slug in self.list_of_slugs:
-            self.list_of_slugs.append('+')
-            self.list_of_slugs.append(self.slug)
-        else:
-            self.list_of_slugs.remove(self.slug)
-        print(self.list_of_slugs)
-        return reverse('product_brand_url', kwargs={'slug': ''.join(self.list_of_slugs)})
+        # brand_slug = ('+')+ self.slug
+        # if not self.slug in self.list_of_slugs:
+            
+        #     self.list_of_slugs.append(brand_slug)
+        # else:
+        #     self.list_of_slugs.remove(brand_slug)
+        # print(self.list_of_slugs)
+        return reverse('product_brand_url', kwargs={'slug': ''.join(self.slug)})
 
     def clearBrands(self):
         self.list_of_slugs = []

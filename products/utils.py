@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from products.models import Product, Brand
 from products.function.getImage import *
 from products.function.sneakerScraper import *
+from products.function.slugify import unslug
 from .load_products import refreshDatabase
 from time import time
         
@@ -32,7 +33,8 @@ class objectListMixin(View):
         if not slug:
             products_list = self.product_model.order_by(order)
         else: 
-            products_list = self.product_model.filter(brand__iexact=slug).order_by(order)
+            products_list = self.product_model.filter(brand__iexact=unslug(slug)).order_by(order)
+            print(unslug(slug))
 
 
         paginator = Paginator(products_list, 20)
